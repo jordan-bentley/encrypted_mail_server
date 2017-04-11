@@ -1,60 +1,35 @@
-CLIENT sends "HELO" to the server                                   DONE
-Server Reads it and returns "OLEH".                                 DONE
+# Encrypted Mail Server
 
-If sucess, client sends a request for the public_key                DONE
-server sends public_key to client                                   DONE
+### Do not use this in production under ANY circumstances!
+### This was created for an undergraduate Networking course.
 
-client prompted for register or login                               DONE
-credentials are encrypted with public_key and sent to the server    DONE
+# Description
 
-Server generates a new set of keys USR[username] = user_private_key DONE
-Server sends the client their public_key (Stored on client)         DONE
-    
-All messages are encrypted with public_key on client                DONE
-decrypted on server with private key                                DONE
-    
-All messages include the username                                   CAN IMPLEMENT
+This rudimentery  demonstrates the basics of networking. 
+Specifically, it implements:
 
----------------------------------------------------------------------------------
+- Single byte packets 
+- RSA Public/Private Key encryption
+- SHA1 Checksum
+- Serialized Transfer of Datastructures with [Protobuff](https://developers.google.com/protocol-buffers/)
 
-Changes for Proxy Server:
 
-Psuedo-code for SHA implementation.
+# Install Notes
 
-CLIENT:
-msg = keyboard_input
-cheksum = SHA1(msg)
-msgwithSHA = msg + checksum
-encrypted_msg = encrypt(msgWithSHA)
-send(encrypted_msg)
+- Ensure Python 2.7 is installed
+- Include the Server class
+- <Protobuff?>
 
-SERVER:
-encrypted_msg = receive(client)
-msgWithSHA = decrypt(encrypted_message)
-checksum = getSHAfromMsg(msgWithSHA)
-msg = getMsgFromMsg(msgWithSHA)
-if SHA1(msg) == checksum:
-    print "data verified legit"
-else:
-    print "Data corrupt"
-    askClientToTryAgain()
-    
-TODO:
+# Libraries Used
 
-Client takes the already encrypted message, breaks it into chunks (size TBD)
+- Socket
+- Sys
+- Crypto
+    - RSA
+    - Random
+- Hashlib
 
-Client calculates the SHA of each chunk and sends the the chunks inidividually
-with their SHA values.
+# File Structure Mapping
 
-Server recieves each chunk and calculates the SHA for it. If it matches
-the SHA that was sent with the chunk, it accepts and stores/appends the values
-until the Client has finished sending chunks.
-
-If the SHA values do not match, the Server returns a KO (or something) which
-tells the client to resend that piece of data. This will continue to occur until
-the SHA values match.
-
-Server will need to send back an OK or KO for each chunk to tell the client
-what to do next. If OK the client sends the next chunk, if KO client resends
-the previous chunk.
+<To be completed when project is finished>
 
